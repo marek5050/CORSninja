@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CORS.NINJA</title>
+
+    <script type="text/javascript" src="js/knockout-3.2.0.js"></script>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div class="container">
+ <div class="hero-unit">
+      <h1>CORS.ninja <br>
+      <small>To reach all the edges of the net.</small> </h1>
+</div>
+
+
+<div class="row">
+    <h2>Overview</h2>
+    <p>
+            A couple of projects I've worked revolved around building a single page application
+            that requested data from another website somewhere along the internet. For some
+            of the projects I lacked server side access and CORS prevented me from effectively building
+            these pages.
+    </p>
+    <p>
+            Ironically all one needs is an API to some intermediatery server that will process these
+            requests and return a JSON object of the requested information. That server can be
+            CORS.ninja for me and you.
+    </p>
+    <p>
+            The code is simple.... to request www.google.com we just need to perform an AJAX call to
+  <pre>
+    $.getJSON("http://www.cors.ninja/api/request", {url: "http://www.google.com", method: "GET"},
+         function (data) {
+             console.log( JSON.stringify( data ) );
+         }
+    );
+  </pre>
+
+    <h2>Good to know</h2>
+    <ul>
+        <li>Currently we only support regular GET / POST calls without any body parameters.</li>
+        <li>None of the traffic is encrypted so pass API keys and Credentials at your own risk. </li>
+        <li>Requesting Javascript heavy websites most likely won't yield the desired results.</li>
+    </ul>
+</div>
+
+
+<div class="row">
+    <h3>Test it out</h3>
+     <form class="form-inline" onsubmit="return readyFn()">
+        <select id="method"><option>GET</option><option>POST</option></select>
+        <input  class="input-medium span8" id="url" />
+        <button class="btn" id="submitForm" type="submit">Submit</button>
+    </form>
+
+    <h3>Request Result:</h3>
+    <div id="resultBox" data-bind="text:results" style="height:200px;overflow:scroll;" class="span12">
+
+    </div>
+</div>
+
+</div>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/knockout-3.2.0.js"></script>
+</body>
+
+
+<script type="application/javascript">
+    function executeQuery() {
+
+        var self = this;
+        $.getJSON("/api/request", {url: $("#url").val(), method: $("#method").val()}, function (data) {
+            console.log(data);
+
+            _data = data;
+            viewModel.results( JSON.stringify( data ) );
+        });
+    }
+
+    var html_data;
+    var _data;
+    var projects;
+    var items;
+    var viewModel;
+
+    viewModel = {
+        results: ko.observable(),
+        showRenderTimes: ko.observable(false)
+    };
+
+    ko.applyBindings(viewModel);
+
+    function readyFn(){
+            executeQuery();
+       return false;
+    }
+
+</script>
+</html>
