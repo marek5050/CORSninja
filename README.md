@@ -1,0 +1,4 @@
+CORSninja
+=========
+
+CORS.ninja
