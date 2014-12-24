@@ -3,6 +3,15 @@
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="CORSninja.war">
       <element id="artifact" artifact-name="RESTfulExample:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="JUnit4" module-name="RESTfulExample" />
+          <element id="library" level="project" name="org.codehaus.jackson:jackson-core-asl:1.9.11" />
+          <element id="library" level="project" name="org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
+          <element id="library" level="project" name="com.sun.jersey.samples:jsonp:1.17.1" />
+          <element id="library" level="project" name="javax.json:javax.json-api:1.0" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

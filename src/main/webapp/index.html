@@ -33,12 +33,22 @@
     </p>
     <p>
             The code is simple.... to request www.google.com we just need to perform an AJAX call to
-  <pre>
-    $.getJSON("http://www.cors.ninja/api/request", {url: "http://www.google.com", method: "GET"},
-         function (data) {
-             console.log( JSON.stringify( data ) );
-         }
-    );
+<pre>
+    function reload(data) {
+      console.log(data);
+    }
+
+
+    $.ajax({
+        type: 'GET',
+        url: "http://www.cors.ninja/api/request",
+        data:{url: "www.google.com", method: "GET"},
+        async: false,
+        jsonpCallback: 'reload',
+        contentType: "application/json",
+        dataType: 'jsonp'
+     });
+
   </pre>
 
     <h2>Good to know</h2>
@@ -73,16 +83,35 @@
 
 
 <script type="application/javascript">
+
+    function reload(data) {
+        console.log(data);
+        _data = data;
+        viewModel.results( JSON.stringify( data ) );
+    }
+    var debug = 1;
+    var base_url = "/api/request";
+
+    if(!debug) base_url = "http://www.cors.ninja"+base_url;
+
     function executeQuery() {
-
-        var self = this;
-        $.getJSON("/api/request", {url: $("#url").val(), method: $("#method").val()}, function (data) {
-            console.log(data);
-
-            _data = data;
-            viewModel.results( JSON.stringify( data ) );
+        $.ajax({
+            type: 'GET',
+            url: base_url,
+            data:{url: $("#url").val(), method: $("#method").val()},
+            async: false,
+            jsonpCallback: 'reload',
+            contentType: "application/json",
+            dataType: 'jsonp'
+//          ,success: function (json) {
+//                console.dir(json);
+//            },
+//            error: function (e) {
+//                console.log(e);
+//            }
         });
     }
+
 
     var html_data;
     var _data;
@@ -103,4 +132,16 @@
     }
 
 </script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-32995433-18', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
 </html>

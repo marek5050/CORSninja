@@ -15,23 +15,26 @@
 		</repository>
 	</repositories>
 
-    <properties>
-        <spring.version>4.1.0.RELEASE</spring.version>
-    </properties>
-
+<!---  Need Jackson Provider  -->
 
 	<dependencies>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>7.0.42</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
-            <version>2.2.1.GA</version>
+            <version>3.0.10.Final</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>2.2.0.GA</version>
+            <version>3.0.10.Final</version>
         </dependency>
 
         <dependency>
@@ -43,7 +46,7 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson-provider</artifactId>
-            <version>2.0.1.GA</version>
+            <version>3.0.10.Final</version>
         </dependency>
 
         <dependency>
