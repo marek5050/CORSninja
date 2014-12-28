@@ -1,6 +1,7 @@
 package assign.services;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JSONPfilter implements Filter {
@@ -13,13 +14,13 @@ public class JSONPfilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        System.out.println("Filter action");
-
-//        HttpServletResponse res = (HttpServletResponse) response;
-//        res.addHeader("Access-Control-Allow-Origin","*");
-//        res.setHeader("Access-Control-Allow-Methods","GET,POST");
-//        res.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
-
+//        System.out.println("Filter action");
+//
+        HttpServletResponse res = (HttpServletResponse) response;
+        res.addHeader("Access-Control-Allow-Origin","*");
+        res.setHeader("Access-Control-Allow-Methods","GET,POST");
+        res.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+//
         chain.doFilter(request, response);
 
      }

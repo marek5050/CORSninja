@@ -28,30 +28,41 @@
     </p>
     <p>
             Ironically all one needs is an API to some intermediatery server that will process these
-            requests and return a JSON object of the requested information. That server can be
-            CORS.ninja for me and you.
+            requests and return a JSON object with the requested information. That server can be
+            CORS.ninja.
     </p>
     <p>
-            The code is simple.... to request www.google.com we just need to perform an AJAX call to
+            The code can be simple yet powerful.... to request www.google.com we just need to perform an AJAX call to
+
+<h3> JSON </h3>
+<pre>
+    $.ajax({
+        type: 'GET',
+        url: "http://www.cors.ninja/api/request",
+        data:{url: "www.google.com", method: "GET"},
+        contentType: "application/json"
+     });
+</pre>
+
+<!-- $.get("http://localhost:8084/api/request",{url:"www.google.com", method:"GET"},function(data){alert(data)}); -->
+
+<h3> JSONP </h3>
 <pre>
     function reload(data) {
       console.log(data);
     }
 
-
     $.ajax({
         type: 'GET',
         url: "http://www.cors.ninja/api/request",
         data:{url: "www.google.com", method: "GET"},
-        async: false,
         jsonpCallback: 'reload',
         contentType: "application/json",
         dataType: 'jsonp'
      });
+</pre>
 
-  </pre>
-
-    <h2>Good to know</h2>
+    <h4>Good to know</h4>
     <ul>
         <li>Currently we only support regular GET / POST calls without any body parameters.</li>
         <li>None of the traffic is encrypted so pass API keys and Credentials at your own risk. </li>
@@ -72,6 +83,18 @@
     <div id="resultBox" data-bind="text:results" style="height:200px;overflow:scroll;" class="span12">
 
     </div>
+
+
+    <h3> See it in action  </h3>
+    <ul>
+        <li>
+            <span> Market Info Example </span> <a href="/marketinfo.html"> here </a> or <a href="http://jsfiddle.net/dotcz/79x0v5tg/"> jsFiddle</a>
+        </li>
+        <li>
+            <span> Google News Example </span> <a href="/googlenews.html"> here </a> or <a href="http://jsfiddle.net/dotcz/y178odwh/"> jsFiddle</a>
+        </li>
+    </ul>
+
 </div>
 
 </div>

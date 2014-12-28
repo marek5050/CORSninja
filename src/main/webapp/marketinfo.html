@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CORS.NINJA</title>
+
+    <script type="text/javascript" src="js/knockout-3.2.0.js"></script>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div class="container">
+    <div class="hero-unit">
+        <h1>CORS.ninja <br>
+            <small>To reach all the edges of the net.</small>
+        <small><a href="/"> Back home  </a></small>
+        </h1>
+    </div>
+
+
+ <h3 id="price">
+
+ </h3>
+
+<div id="holder">
+
+</div>
+
+</div>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/knockout-3.2.0.js"></script>
+</body>
+
+
+<script type="application/javascript">
+
+    function parse(data) {
+        var dom = $.parseHTML(data.body);
+        var titles = $(dom).find(".esc-lead-article-title-wrapper");
+        var articles = $(dom).find(".esc-lead-snippet-wrapper");
+
+        $.each(titles, function(idx,item,arr){
+            $("#holder").append(item);
+            $("#holder").append(articles[idx]);
+
+        });
+    };
+
+    var requestActive = 'http://www.marketwatch.com/tools/screener?exchange=Nyse&report=MostActive';
+
+    function mostActive(data) {
+        var dom = $.parseHTML(data.body);
+        var content = $(dom).find("#screener>table");
+        $("#holder").append(content);
+    };
+
+    $.ajax({
+        type: 'GET',
+        url: "http://www.cors.ninja/api/request",
+        data: {
+            url: requestActive,
+            method: "GET"
+        },
+        jsonpCallback: 'mostActive',
+        contentType: "application/json",
+        dataType: 'jsonp'
+    });
+
+
+    var request_url = 'http://www.marketwatch.com/investing/fund/SPY';
+    function stockInfo(data) {
+        var dom = $.parseHTML(data.body);
+        var name = $(dom).find("#instrumentname").text();
+        var ticker = $(dom).find("#instrumentticker").text();
+        var price = $(dom).find(".lastprice").text();
+
+        $("#price").append("<span> " + name + " " + ticker  +  " " + price +"</span>" );
+    };
+
+    $.ajax({
+        type: 'GET',
+        url: "http://www.cors.ninja/api/request",
+        data: {
+            url: request_url,
+            method: "GET"
+        },
+        jsonpCallback: 'stockInfo',
+        contentType: "application/json",
+        dataType: 'jsonp'
+    });
+</script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-32995433-18', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</html>
